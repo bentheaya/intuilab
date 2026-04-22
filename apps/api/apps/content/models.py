@@ -54,6 +54,12 @@ class Concept(models.Model):
     importance_text = models.TextField(blank=True)
     rediscovery_path_json = models.JSONField(default=dict, blank=True)
     embedding = models.JSONField(null=True, blank=True, help_text="Vector embedding (placeholder for pgvector)")
+    
+    # Graph Metadata
+    prerequisites = models.ManyToManyField('self', symmetrical=False, related_name='dependents', blank=True)
+    x_pos = models.IntegerField(default=0, help_text="X coordinate on Knowledge Map")
+    y_pos = models.IntegerField(default=0, help_text="Y coordinate on Knowledge Map")
+
 
     def __str__(self):
 
@@ -143,6 +149,35 @@ class WhyItMattersStory(models.Model):
 
     def __str__(self):
         return f"Story: {self.concept.title}"
+
+class AssessmentItem(models.Model):
+    ITEM_TYPES = [
+        ('mcq', 'Multiple Choice Question'),
+        ('tf', 'True/False'),
+        ('short', 'Short Answer'),
+    ]
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE, related_name='assessment_items')
+    lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True, related_name='assessments')
+    question_text = models.TextField()
+    item_type = models.CharField(max_length=10, choices=ITEM_TYPES, default='mcq')
+    explanation = models.TextField(blank=True, help_text="Shown after answering")
+    difficulty = models.PositiveIntegerField(default=1)
+    
+    # Bayesian Knowledge Tracing Parameters (Overrides if specific to item)
+    p_slip = models.FloatField(default=0.1)
+    p_guess = models.FloatField(default=0.2)
+
+    def __str__(self):
+        return f"{self.concept.title} - {self.question_text[:50]}..."
+
+class AssessmentChoice(models.Model):
+    item = models.ForeignKey(AssessmentItem, on_delete=models.CASCADE, related_name='choices')
+    text = models.CharField(max_length=500)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.item.id} - {self.text[:30]}"
+
 
 # Signals for denormalization
 @receiver(post_save, sender=LessonSection)

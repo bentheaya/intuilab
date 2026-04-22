@@ -1,0 +1,451 @@
+{
+  "subject": "physics",
+  "topics": [
+    {
+      "title": "Kinematics",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "Motion in One Dimension",
+          "summary": "Describing position, velocity, and acceleration along a straight line using graphs and equations.",
+          "history_text": "Galileo pioneered the study of uniformly accelerated motion through inclined plane experiments.",
+          "lessons": [
+            {
+              "title": "Position, Displacement, and Distance",
+              "difficulty": 1,
+              "sections": [
+                { "type": "text", "content": "Position \\(x\\) is a location relative to a chosen origin. **Displacement** \\(\\Delta x = x_f - x_i\\) is a vector quantity. Distance is the scalar total length traveled.\n\nExample: Walking 4 m east then 2 m west gives \\(\\Delta x = +2\\) m but distance = 6 m." },
+                { "type": "socratic_pause", "content": "If you complete one full lap on a 400 m track, what is your displacement? How does this illustrate the difference between vector and scalar quantities?" },
+                { "type": "lab", "content": "Use a meter stick or motion sensor to walk in a straight line. Record positions at regular time intervals and plot a position-time graph." }
+              ]
+            },
+            {
+              "title": "Average and Instantaneous Velocity",
+              "difficulty": 1,
+              "sections": [
+                { "type": "text", "content": "**Average velocity** \\(v_{avg} = \\frac{\\Delta x}{\\Delta t}\\). **Instantaneous velocity** is the slope of the position-time graph at a point.\n\nVelocity is a vector; speed is its magnitude." },
+                { "type": "socratic_pause", "content": "Can an object have constant speed but changing velocity? Provide an everyday example." }
+              ]
+            },
+            {
+              "title": "Acceleration and Motion Graphs",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "Acceleration \\(a = \\frac{\\Delta v}{\\Delta t}\\). On velocity-time graphs, slope gives acceleration and area gives displacement.\n\nConstant acceleration produces parabolic position-time graphs." },
+                { "type": "lab", "content": "Use a dynamics cart on a slightly inclined track with a motion sensor. Analyze position, velocity, and acceleration graphs." }
+              ]
+            },
+            {
+              "title": "Kinematic Equations for Constant Acceleration",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "The four key equations:\n1. \\(v = v_0 + a t\\)\n2. \\(\\Delta x = v_0 t + \\frac{1}{2} a t^2\\)\n3. \\(v^2 = v_0^2 + 2 a \\Delta x\\)\n4. \\(\\Delta x = \\frac{v + v_0}{2} t\\)\n\nThese assume constant acceleration." }
+              ]
+            },
+            {
+              "title": "Free Fall and Gravity",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "Near Earth's surface, free-falling objects accelerate at \\(g \\approx 9.8\\) m/s² downward (ignoring air resistance). Use kinematic equations with \\(a = -g\\)." },
+                { "type": "lab", "content": "Drop objects of different masses from the same height (use video analysis or stopwatch). Compare fall times." },
+                { "type": "socratic_pause", "content": "Why do a feather and a hammer fall at different rates on Earth but would fall together on the Moon?" }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Motion in Two Dimensions",
+          "summary": "Vectors, projectile motion, and relative motion.",
+          "history_text": "Newton extended Galileo's ideas using vector components.",
+          "lessons": [
+            {
+              "title": "Vectors: Addition, Subtraction, and Components",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "Resolve vectors: \\(v_x = v \\cos \\theta\\), \\(v_y = v \\sin \\theta\\). Add by components: \\(R_x = A_x + B_x\\)." },
+                { "type": "lab", "content": "Use graph paper or a vector applet to add displacement vectors for a treasure hunt scenario." }
+              ]
+            },
+            {
+              "title": "Projectile Motion – Horizontal Launch",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Horizontal velocity is constant. Vertical motion: \\(y = \\frac{1}{2} (-g) t^2\\). Time of flight depends only on height." }
+              ]
+            },
+            {
+              "title": "Projectile Motion – Angled Launch",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Range \\(R = \\frac{v_0^2 \\sin 2\\theta}{g}\\), maximum at 45°. Vertical and horizontal motions are independent." },
+                { "type": "socratic_pause", "content": "At what launch angle is the range maximized? What trade-off occurs for maximum height?" },
+                { "type": "lab", "content": "Launch a projectile (e.g., ball from ramp or launcher) at different angles. Measure range and compare to calculations." }
+              ]
+            },
+            {
+              "title": "Relative Motion and Reference Frames",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Velocity of A relative to B: \\(\\vec{v}_{A/B} = \\vec{v}_{A} - \\vec{v}_{B}\\). Classic example: boat crossing a river." }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dynamics and Newton's Laws",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "Newton's Laws of Motion",
+          "summary": "Forces and their effects on motion.",
+          "history_text": "Isaac Newton formalized these in *Principia Mathematica* (1687).",
+          "lessons": [
+            {
+              "title": "Newton's First Law and Inertia",
+              "difficulty": 1,
+              "sections": [
+                { "type": "text", "content": "An object remains at rest or in uniform motion unless acted on by a net external force. Inertia is resistance to change in motion." }
+              ]
+            },
+            {
+              "title": "Newton's Second Law (F = ma)",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "**\\(\\vec{F}_{net} = m \\vec{a}\\)**. Free-body diagrams isolate forces. Units: 1 N = 1 kg·m/s²." },
+                { "type": "lab", "content": "Vary hanging mass on a pulley system attached to a cart. Measure acceleration and plot F vs. a." }
+              ]
+            },
+            {
+              "title": "Newton's Third Law (Action-Reaction)",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "Forces come in pairs: \\(\\vec{F}_{AB} = -\\vec{F}_{BA}\\). Example: rocket propulsion or walking." },
+                { "type": "socratic_pause", "content": "When you jump, you push Earth down—why don't we notice Earth moving?" }
+              ]
+            },
+            {
+              "title": "Systems and Center of Mass",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "For a system, treat external forces only. Center of mass accelerates as if all mass were there: \\(M \\vec{a}_{cm} = \\vec{F}_{ext}\\)." }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Applications of Newton's Laws",
+          "summary": "Friction, tension, normal force, and inclined planes.",
+          "history_text": "These applications were refined through experiments by many scientists post-Newton.",
+          "lessons": [
+            {
+              "title": "Free-Body Diagrams and Equilibrium",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "Draw all forces. For equilibrium: \\(\\sum F_x = 0\\), \\(\\sum F_y = 0\\)." }
+              ]
+            },
+            {
+              "title": "Inclined Planes and Components",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Resolve gravity: parallel component \\(mg \\sin \\theta\\), perpendicular \\(mg \\cos \\theta\\)." },
+                { "type": "lab", "content": "Release a cart on an inclined plane. Measure acceleration and verify \\(a = g \\sin \\theta\\) (low friction)." }
+              ]
+            },
+            {
+              "title": "Static and Kinetic Friction",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "\\(f_s \\leq \\mu_s N\\), \\(f_k = \\mu_k N\\). Static friction prevents motion; kinetic opposes it." },
+                { "type": "lab", "content": "Pull a block with a spring scale on different surfaces. Find coefficients of friction." }
+              ]
+            },
+            {
+              "title": "Tension and Pulleys",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Ideal strings transmit tension uniformly. Atwood's machine: acceleration depends on mass difference." }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Circular Motion",
+          "summary": "Uniform circular motion and centripetal force.",
+          "history_text": "Newton connected circular motion to his law of gravitation.",
+          "lessons": [
+            {
+              "title": "Uniform Circular Motion",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Centripetal acceleration \\(a_c = \\frac{v^2}{r}\\). Centripetal force \\(F_c = \\frac{m v^2}{r}\\) toward center." }
+              ]
+            },
+            {
+              "title": "Banked Curves and Vertical Circles",
+              "difficulty": 4,
+              "sections": [
+                { "type": "text", "content": "Banking angle reduces reliance on friction: \\(\\tan \\theta = \\frac{v^2}{r g}\\)." },
+                { "type": "socratic_pause", "content": "At the top of a vertical loop, why can a car stay on track even if speed seems low?" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Work, Energy, and Power",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "Work and the Work-Energy Theorem",
+          "summary": "Energy transfer via force over distance.",
+          "history_text": "The work-energy theorem unifies earlier ideas about motion and forces.",
+          "lessons": [
+            {
+              "title": "Work by Constant and Variable Forces",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "Work \\(W = \\vec{F} \\cdot \\vec{d} = F d \\cos \\theta\\). Area under force-displacement graph." }
+              ]
+            },
+            {
+              "title": "Work-Energy Theorem",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Net work equals change in kinetic energy: \\(W_{net} = \\Delta KE = \\frac{1}{2} m v_f^2 - \\frac{1}{2} m v_i^2\\)." },
+                { "type": "lab", "content": "Measure work done by a spring launcher on a cart and compare to gained kinetic energy." }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Potential Energy and Conservation",
+          "summary": "Conservative forces and energy conservation.",
+          "history_text": "Conservation principles emerged from 19th-century mechanics.",
+          "lessons": [
+            {
+              "title": "Gravitational and Elastic Potential Energy",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "Gravitational PE: \\(U_g = m g h\\). Spring PE: \\(U_s = \\frac{1}{2} k x^2\\)." }
+              ]
+            },
+            {
+              "title": "Conservation of Mechanical Energy",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "When only conservative forces act: \\(KE_i + PE_i = KE_f + PE_f\\)." },
+                { "type": "socratic_pause", "content": "A roller coaster loses energy to friction. How does this affect maximum height on subsequent hills?" },
+                { "type": "lab", "content": "Pendulum or ramp experiment: compare initial PE to final KE (account for losses)." }
+              ]
+            },
+            {
+              "title": "Non-Conservative Forces and Energy",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Work by friction or drag dissipates mechanical energy as thermal energy." }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Power",
+          "summary": "Rate of energy transfer.",
+          "history_text": "James Watt defined horsepower while improving steam engines.",
+          "lessons": [
+            {
+              "title": "Power and Efficiency",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Power \\(P = \\frac{W}{t} = F v\\) (instantaneous). Efficiency = useful output / total input." }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Linear Momentum",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "Momentum, Impulse, and Collisions",
+          "summary": "Mass in motion and changes due to forces.",
+          "history_text": "Conservation follows directly from Newton's third law.",
+          "lessons": [
+            {
+              "title": "Linear Momentum and Impulse",
+              "difficulty": 2,
+              "sections": [
+                { "type": "text", "content": "Momentum \\(\\vec{p} = m \\vec{v}\\). Impulse \\(\\vec{J} = \\vec{F} \\Delta t = \\Delta \\vec{p}\\)." }
+              ]
+            },
+            {
+              "title": "Conservation of Linear Momentum",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Isolated system: \\(\\vec{p}_{total,i} = \\vec{p}_{total,f}\\)." },
+                { "type": "lab", "content": "Elastic and inelastic collisions using air track or low-friction carts. Verify momentum conservation." }
+              ]
+            },
+            {
+              "title": "Collisions: Elastic vs. Inelastic",
+              "difficulty": 4,
+              "sections": [
+                { "type": "text", "content": "Elastic: both momentum and KE conserved. Inelastic: momentum conserved, KE not." },
+                { "type": "socratic_pause", "content": "In a perfectly inelastic collision, why is kinetic energy always lost?" }
+              ]
+            },
+            {
+              "title": "Center of Mass Motion",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "The center of mass moves as if all external forces act on it." }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Rotational Motion and Torque",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "Rotational Kinematics",
+          "summary": "Angular analogs of linear quantities.",
+          "history_text": "Euler and others developed rotational descriptions.",
+          "lessons": [
+            {
+              "title": "Angular Displacement, Velocity, and Acceleration",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Relations: \\(s = r \\theta\\), \\(v = r \\omega\\), \\(a_t = r \\alpha\\). Equations mirror linear ones with angular variables." }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Torque and Rotational Dynamics",
+          "summary": "Causes of angular acceleration.",
+          "history_text": "The torque concept often leads to the 'Torque Paradox' for students.",
+          "lessons": [
+            {
+              "title": "Torque and the Torque Paradox",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Torque \\(\\tau = r F \\sin \\theta\\) or \\(\\vec{\\tau} = \\vec{r} \\times \\vec{F}\\). \\(\\tau_{net} = I \\alpha\\)." },
+                { "type": "socratic_pause", "content": "Why does a small force far from the pivot produce more torque than a large force near it? Think of opening a door." }
+              ]
+            },
+            {
+              "title": "Moment of Inertia",
+              "difficulty": 4,
+              "sections": [
+                { "type": "text", "content": "I = Σ m r². Depends on mass distribution. Parallel-axis theorem: \\(I = I_{cm} + M d^2\\)." },
+                { "type": "lab", "content": "Compare rolling times of different objects (hoop vs. solid cylinder) down a ramp." }
+              ]
+            },
+            {
+              "title": "Rotational Equilibrium",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "For equilibrium: net torque = 0 and net force = 0 (seesaw, ladder problems)." }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Angular Momentum",
+          "summary": "Conservation of rotational motion.",
+          "history_text": "Described in planetary motion and rigid body dynamics.",
+          "lessons": [
+            {
+              "title": "Angular Momentum and Conservation",
+              "difficulty": 4,
+              "sections": [
+                { "type": "text", "content": "L = I ω or \\(\\vec{L} = \\vec{r} \\times \\vec{p}\\). Conserved when net external torque is zero." },
+                { "type": "lab", "content": "Rotating stool with dumbbells: pull arms in and observe speed increase." },
+                { "type": "socratic_pause", "content": "Explain why figure skaters spin faster when pulling in their arms." }
+              ]
+            },
+            {
+              "title": "Rolling Without Slipping",
+              "difficulty": 4,
+              "sections": [
+                { "type": "text", "content": "Combines translation and rotation: \\(v = r \\omega\\), total KE = \\(\\frac{1}{2} m v^2 + \\frac{1}{2} I \\omega^2\\)." }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Oscillations and Gravitation",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "Simple Harmonic Motion",
+          "summary": "Periodic restoring forces.",
+          "history_text": "Studied by Hooke (springs) and Galileo (pendulums).",
+          "lessons": [
+            {
+              "title": "Mass-Spring Systems",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "Restoring force F = -kx leads to \\(a = -\\frac{k}{m} x\\). Period \\(T = 2\\pi \\sqrt{\\frac{m}{k}}\\)." },
+                { "type": "lab", "content": "Hang different masses on a spring. Measure periods and verify relationship with mass." }
+              ]
+            },
+            {
+              "title": "Simple Pendulums",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "For small angles: \\(T \\approx 2\\pi \\sqrt{\\frac{L}{g}}\\). Independent of mass." }
+              ]
+            },
+            {
+              "title": "Energy in Oscillations",
+              "difficulty": 4,
+              "sections": [
+                { "type": "text", "content": "Total energy conserved: max KE at equilibrium, max PE at amplitude." }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Universal Gravitation",
+          "summary": "Newton's law and orbital mechanics.",
+          "history_text": "Newton linked falling objects to planetary orbits.",
+          "lessons": [
+            {
+              "title": "Newton's Law of Universal Gravitation",
+              "difficulty": 3,
+              "sections": [
+                { "type": "text", "content": "F = G \\frac{m_1 m_2}{r^2}. Gravitational field strength g = G M / r²." }
+              ]
+            },
+            {
+              "title": "Circular Orbits and Kepler's Laws",
+              "difficulty": 4,
+              "sections": [
+                { "type": "text", "content": "For circular orbits: \\(\\frac{G M m}{r^2} = \\frac{m v^2}{r}\\). Kepler's 3rd law: T² ∝ r³." },
+                { "type": "socratic_pause", "content": "Astronauts in orbit feel weightless—why is gravity still acting strongly?" }
+              ]
+            },
+            {
+              "title": "Gravitational Potential Energy",
+              "difficulty": 4,
+              "sections": [
+                { "type": "text", "content": "U = -G \\frac{m_1 m_2}{r} (negative because work is done by gravity as objects approach)." }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

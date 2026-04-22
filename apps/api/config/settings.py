@@ -145,13 +145,13 @@ CORS_ALLOW_ALL_ORIGINS = True  # For development
 # Channels
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [env('REDIS_URL', default='redis://localhost:6371/0')],
-        },
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
     },
 }
 
 # AI Settings
+GOOGLE_API_KEY = env('GOOGLE_API_KEY', default='')
+GEMINI_MODEL = env('GEMINI_MODEL', default='gemini-1.5-flash')
 XAI_API_KEY = env('XAI_API_KEY', default='')
 XAI_MODEL = env('XAI_MODEL', default='grok-beta')
+

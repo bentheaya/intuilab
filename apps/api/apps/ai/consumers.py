@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .services.orchestrator import GrokOrchestrator
+from .services.orchestrator import SocraticOrchestrator
+
 
 class SocraticConsumer(AsyncWebsocketConsumer):
     """
@@ -10,7 +11,8 @@ class SocraticConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.lesson_id = self.scope['url_route']['kwargs']['lesson_id']
         self.room_group_name = f'chat_lesson_{self.lesson_id}'
-        self.orchestrator = GrokOrchestrator()
+        self.orchestrator = SocraticOrchestrator()
+
         
         # In a real app, we'd persist history in the DB.
         # For now, we maintain it in the session/memory.
