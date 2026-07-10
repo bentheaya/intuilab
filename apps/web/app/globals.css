@@ -150,11 +150,19 @@
 
 /* Scientific Noir Utilities */
 .glass {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .glass-dark {
-  @apply bg-zinc-950/40 backdrop-blur-2xl border border-white/5 shadow-2xl;
+  background-color: rgba(9, 9, 11, 0.4);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .neon-glow-physics {
@@ -193,4 +201,71 @@
 
 .widget-title-geometric {
   @apply text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-3 flex justify-between items-center;
+}
+
+/* ── Stitch UI Compatibility Layer ───────────────────────────────────── */
+
+/* gradient-text: indigo → cyan → emerald */
+.gradient-text {
+  @apply bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent;
+}
+
+/* glass-card: alias for .glass with rounded-xl */
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-radius: 0.75rem; /* rounded-xl */
+}
+
+/* energy-badge: inline pill used in hero streak badges */
+.energy-badge {
+  @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full
+         bg-gradient-to-r from-indigo-500/20 to-cyan-400/20
+         border border-indigo-400/30 text-xs font-medium text-cyan-200;
+}
+
+/* glow-accent: green mastery glow */
+.glow-accent {
+  @apply drop-shadow-[0_0_8px_rgba(16,185,129,0.6)];
+}
+
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Rediscover pulse */
+@keyframes rediscover-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.8; transform: scale(1.05); }
+}
+.rediscover-pulse {
+  animation: rediscover-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Lab grid background */
+.lab-grid {
+  background-image:
+    linear-gradient(0deg, transparent 24%, rgba(79,70,229,0.05) 25%,
+      rgba(79,70,229,0.05) 26%, transparent 27%, transparent 74%,
+      rgba(79,70,229,0.05) 75%, rgba(79,70,229,0.05) 76%, transparent 77%),
+    linear-gradient(90deg, transparent 24%, rgba(34,211,238,0.05) 25%,
+      rgba(34,211,238,0.05) 26%, transparent 27%, transparent 74%,
+      rgba(34,211,238,0.05) 75%, rgba(34,211,238,0.05) 76%, transparent 77%);
+  background-size: 50px 50px;
+}
+
+/* Subject color tokens */
+:root {
+  --color-physics: #0EA5E9;
+  --color-chemistry: #F97316;
+  --color-biology: #10B981;
+  --color-math: #8B5CF6;
 }

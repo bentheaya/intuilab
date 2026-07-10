@@ -20,8 +20,10 @@ import {
   Beaker, 
   Briefcase, 
   Layers, 
-  Settings, 
-  LogOut,
+  Clock,
+  Users,
+  Brain,
+  User,
   Sparkles
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -33,8 +35,12 @@ const navItems = [
   { title: "Learn", icon: BookOpen, url: "/" },
   { title: "Knowledge Map", icon: Map, url: "/map" },
   { title: "Virtual Lab", icon: Beaker, url: "/lab" },
-  { title: "Portfolio", icon: Briefcase, url: "/portfolio" },
+  { title: "Feynman Challenger", icon: Brain, url: "/feynman" },
   { title: "Flashcards", icon: Layers, url: "/flashcards" },
+  { title: "Portfolio", icon: Briefcase, url: "/portfolio" },
+  { title: "History", icon: Clock, url: "/history" },
+  { title: "Collaborate", icon: Users, url: "/collaborate" },
+  { title: "Profile", icon: User, url: "/profile" },
 ];
 
 export function AppSidebar() {
@@ -43,8 +49,8 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r border-sidebar-border bg-sidebar" collapsible="icon">
       <SidebarHeader className="p-4 flex items-center justify-center">
-        <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-lg text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-          S
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center font-bold text-sm text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+          IL
         </div>
       </SidebarHeader>
       <SidebarContent>

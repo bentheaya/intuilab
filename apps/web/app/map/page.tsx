@@ -16,6 +16,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useDiscovery } from '@/hooks/use-discovery';
 import { Sparkles, Map as MapIcon, Brain, Info } from 'lucide-react';
 import { motion } from 'motion/react';

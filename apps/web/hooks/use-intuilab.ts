@@ -56,6 +56,21 @@ export function useSocraticChat(lessonId: string = "demo-lesson") {
               }];
             }
           });
+        } else if (data.type === 'history') {
+          const loadedMessages = data.messages.map((m: any) => ({
+            id: m.id || Math.random().toString(36).substring(7),
+            role: m.role === 'user' ? 'student' : 'mentor',
+            content: m.content,
+            timestamp: new Date(m.timestamp)
+          }));
+          setMessages(loadedMessages.length > 0 ? loadedMessages : [
+            {
+              id: '1',
+              role: 'mentor',
+              content: 'Welcome, seeker of knowledge. What phenomenon shall we explore today?',
+              timestamp: new Date(),
+            }
+          ]);
         } else if (data.type === 'complete') {
           setIsTyping(false);
         } else if (data.type === 'error') {
