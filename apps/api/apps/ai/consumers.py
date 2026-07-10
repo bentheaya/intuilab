@@ -55,17 +55,61 @@ class SocraticConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         """
         Receive message from WebSocket.
-        Expected format: {"message": "Student query"}
+        Expected format: 
+        1. {"message": "Student query"}
+        2. {"type": "lab_event", "event": "launch", "parameters": {...}}
         """
         data = json.loads(text_data)
-        user_input = data.get('message')
-
-        if not user_input:
-            return
-
-        # Add user message to history & save to DB
-        self.message_history.append({"role": "user", "content": user_input})
-        await self.save_message("user", user_input)
+        
+        is_lab_event = data.get('type') == 'lab_event'
+        
+        if is_lab_event:
+            event_type = data.get('event')
+            params = data.get('parameters', {})
+            
+            # Construct hidden Socratic system observations
+            if event_type == 'launch':
+                user_input = (
+                    f"[OBSERVATION: I just launched the projectile with: Angle = {params.get('angle')}°, "
+                    f"Velocity = {params.get('velocity')} m/s, Gravity = {params.get('gravity')} m/s². "
+                    f"Comment on this observation Socratically. Guide me to think about the shape of the path or the independence of components.]"
+                )
+            elif event_type == 'parameter_change':
+                user_input = (
+                    f"[OBSERVATION: I just adjusted '{params.get('parameter')}' to {params.get('value')}. "
+                    f"Ask me what I expect will happen to the trajectory before I launch.]"
+                )
+            elif event_type == 'reset':
+                user_input = (
+                    "[OBSERVATION: I just reset the simulation. Guide me to try a new test (like launching at 45 degrees versus 30 degrees).]"
+                )
+            elif event_type == 'titration_parameter_change':
+                user_input = (
+                    f"[OBSERVATION: I adjusted the titration parameter '{params.get('parameter')}' to {params.get('value')}. "
+                    f"Comment on this observation Socratically. Ask me what I expect will happen to the equivalence point or the pH curve slope.]"
+                )
+            elif event_type == 'titration_indicator_change':
+                user_input = (
+                    f"[OBSERVATION: I switched the pH indicator to {params.get('indicator')}. "
+                    f"Comment on this choice Socratically. What pH range does this indicator flip colors, and is it appropriate for this titration?]"
+                )
+            elif event_type == 'titration_reset':
+                user_input = (
+                    "[OBSERVATION: I reset the titration beaker. Guide me to run a new neutralisation trial.]"
+                )
+            else:
+                return
+            
+            # Append observation to runtime memory (do not persist hidden observations to DB to keep chat history clean)
+            self.message_history.append({"role": "user", "content": user_input})
+        else:
+            user_input = data.get('message')
+            if not user_input:
+                return
+                
+            # Add user message to history & save to DB
+            self.message_history.append({"role": "user", "content": user_input})
+            await self.save_message("user", user_input)
 
         full_response = ""
         

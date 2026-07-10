@@ -42,20 +42,20 @@ This file tracks the implementation progress of the IntuiLab platform modules, p
 ## 📈 Phase 2: Depth & Growth (Advanced Features)
 
 ### Module 7: Interactive Lab Simulator & AI Lab Monitor
-- [ ] Integrate Projectile Motion Lab simulation events with Socratic Tutor sidebar <!-- id: 16 -->
-- [ ] Build additional Virtual Lab configurations (e.g., Chemistry Titration) <!-- id: 17 -->
+- [x] Integrate Projectile Motion Lab simulation events with Socratic Tutor sidebar <!-- id: 16 -->
+- [x] Build additional Virtual Lab configurations (e.g., Chemistry Titration) <!-- id: 17 -->
 
 ### Module 8: Feynman Challenger Assessment
-- [ ] Implement `/feynman/[concept]` speech-to-text / text explanation workspace <!-- id: 18 -->
-- [ ] Create backend API endpoint to score explanations using LLM (Clarity, Depth, Intuition) and update BKT <!-- id: 19 -->
+- [x] Implement `/feynman/[concept]` speech-to-text / text explanation workspace <!-- id: 18 -->
+- [x] Create backend API endpoint to score explanations using LLM (Clarity, Depth, Intuition) and update BKT <!-- id: 19 -->
 
 ### Module 9: History-to-Intuition Timeline
-- [ ] Add backend schemas and API endpoints for concept discovery history <!-- id: 20 -->
-- [ ] Build the interactive historical discovery timeline `/history/[concept]` on the frontend <!-- id: 21 -->
+- [x] Add backend schemas and API endpoints for concept discovery history <!-- id: 20 -->
+- [x] Build the interactive historical discovery timeline `/history/[concept]` on the frontend <!-- id: 21 -->
 
 ### Module 10: Discovery Portfolio & Notes
-- [ ] Build digital lab notebook `/portfolio` to save student notes, derivations, and annotations <!-- id: 22 -->
-- [ ] Add CRUD APIs for student insights and portfolios <!-- id: 23 -->
+- [x] Build digital lab notebook `/portfolio` to save student notes, derivations, and annotations <!-- id: 22 -->
+- [x] Add CRUD APIs for student insights and portfolios <!-- id: 23 -->
 
 ---
 

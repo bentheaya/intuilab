@@ -123,7 +123,17 @@ export function useSocraticChat(lessonId: string = "demo-lesson") {
     }));
   }, []);
 
-  return { messages, sendMessage, isTyping, isConnected };
+  const sendLabEvent = useCallback((event: string, parameters: any) => {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      socketRef.current.send(JSON.stringify({
+        type: 'lab_event',
+        event: event,
+        parameters: parameters
+      }));
+    }
+  }, []);
+
+  return { messages, sendMessage, isTyping, isConnected, sendLabEvent };
 }
 
 export function useLessonProgress() {

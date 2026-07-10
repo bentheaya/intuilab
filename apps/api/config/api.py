@@ -1,6 +1,6 @@
 from ninja import NinjaAPI, Router
 from apps.content.models import Lesson, Concept, Subject, Topic, AssessmentItem
-from apps.assessment.models import ConceptMastery, AssessmentAttempt, Flashcard, SRSReview
+from apps.assessment.models import ConceptMastery, AssessmentAttempt, Flashcard, SRSReview, StudentInsight
 from apps.assessment.services import MasteryService, SRSService
 from django.utils import timezone
 from typing import List, Optional
@@ -106,6 +106,49 @@ def get_map(request):
                 })
                 
         return {"nodes": nodes, "edges": edges}
+    except Exception as e:
+        return {"error": str(e)}
+
+@content_router.get("/concepts/{concept_slug}", response=dict)
+def get_concept(request, concept_slug: str):
+    try:
+        concept = Concept.objects.select_related('topic__subject').get(slug=concept_slug)
+        return {
+            "id": concept.id,
+            "title": concept.title,
+            "slug": concept.slug,
+            "summary": concept.summary,
+            "subject": concept.topic.subject.name.lower()
+        }
+    except Concept.DoesNotExist:
+        return {"error": "Concept not found"}
+    except Exception as e:
+        return {"error": str(e)}
+
+@content_router.get("/concepts/{concept_slug}/timeline", response=dict)
+def get_concept_timeline(request, concept_slug: str):
+    try:
+        concept = Concept.objects.get(slug=concept_slug)
+        timeline = getattr(concept, 'timeline', None)
+        if not timeline:
+            return {
+                "concept_title": concept.title,
+                "title": f"Discovery Timeline of {concept.title}",
+                "entries": [
+                    {
+                        "year": "Historical",
+                        "title": "Discovery Context",
+                        "description": concept.history_text or "Context of discovery."
+                    }
+                ]
+            }
+        return {
+            "concept_title": concept.title,
+            "title": timeline.title,
+            "entries": timeline.entries_json
+        }
+    except Concept.DoesNotExist:
+        return {"error": "Concept not found"}
     except Exception as e:
         return {"error": str(e)}
 
@@ -250,6 +293,139 @@ def review_flashcard(request, payload: FlashcardReviewSchema):
         }
     except Flashcard.DoesNotExist:
         return {"error": "Flashcard not found"}
+    except Exception as e:
+        return {"error": str(e)}
+
+class FeynmanSubmitSchema(BaseModel):
+    concept_slug: str
+    explanation: str
+
+@assessment_router.post("/feynman/score", response=dict)
+def score_feynman_explanation(request, payload: FeynmanSubmitSchema):
+    from apps.ai.services.orchestrator import SocraticOrchestrator
+    try:
+        concept = Concept.objects.get(slug=payload.concept_slug)
+        orchestrator = SocraticOrchestrator()
+        
+        # Evaluate
+        result = orchestrator.evaluate_feynman_explanation(
+            concept_title=concept.title,
+            concept_summary=concept.summary,
+            explanation=payload.explanation
+        )
+        
+        # Update BKT Mastery if user is logged in
+        if request.user.is_authenticated:
+            is_correct = result.get("score", 50) >= 70
+            MasteryService.update_mastery(
+                user=request.user,
+                concept=concept,
+                is_correct=is_correct,
+                p_slip=0.1,
+                p_guess=0.2
+            )
+            result["mastery_updated"] = True
+        else:
+            result["mastery_updated"] = False
+            
+        return result
+        
+    except Concept.DoesNotExist:
+        return {"error": "Concept not found"}
+    except Exception as e:
+        return {"error": str(e)}
+
+class StudentInsightSchema(BaseModel):
+    title: str
+    insight_type: str
+    subject: str
+    summary: str
+    tags: List[str] = []
+
+@assessment_router.get("/insights", response=List[dict])
+def get_insights(request):
+    if not request.user.is_authenticated:
+        # Fallback list for guest users
+        return [
+            {
+                "id": "1",
+                "date": "2026-04-20",
+                "time": "01:45 AM",
+                "title": "Non-linear derivation of Angular Momentum",
+                "insight_type": "derivation",
+                "summary": "While exploring the conservation laws, I realized that the pivot point choice is purely relative but the torque result is invariant...",
+                "subject": "physics",
+                "tags": ["Mechanics", "Personal Insight"],
+            },
+            {
+                "id": "2",
+                "date": "2026-04-18",
+                "time": "11:20 PM",
+                "title": "Intuition on Entropy",
+                "insight_type": "voice-note",
+                "summary": "Voice recording: Transcribed summary of the relationship between entropy and information theory. Entropy is missing information.",
+                "subject": "physics",
+                "tags": ["Thermodynamics", "Philosophy"],
+            },
+            {
+                "id": "3",
+                "date": "2026-04-15",
+                "time": "04:10 PM",
+                "title": "Chemical Equilibrium Visualization",
+                "insight_type": "lab-note",
+                "summary": "Le Chatelier's principle is essentially system feedback in action. Like a spring resisting displacement.",
+                "subject": "chemistry",
+                "tags": ["Equilibrium", "Analogies"],
+            }
+        ]
+        
+    insights = StudentInsight.objects.filter(user=request.user)
+    return [
+        {
+            "id": str(ins.id),
+            "date": ins.created_at.date().isoformat(),
+            "time": ins.created_at.strftime("%I:%M %p"),
+            "title": ins.title,
+            "insight_type": ins.insight_type,
+            "summary": ins.summary,
+            "subject": ins.subject,
+            "tags": ins.tags
+        } for ins in insights
+    ]
+
+@assessment_router.post("/insights", response=dict)
+def create_insight(request, payload: StudentInsightSchema):
+    if not request.user.is_authenticated:
+        return {"error": "Authentication required to save insights"}
+        
+    try:
+        insight = StudentInsight.objects.create(
+            user=request.user,
+            title=payload.title,
+            insight_type=payload.insight_type,
+            subject=payload.subject,
+            summary=payload.summary,
+            tags=payload.tags
+        )
+        return {
+            "status": "success",
+            "insight_id": insight.id,
+            "message": "Insight saved to portfolio successfully"
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+@assessment_router.delete("/insights/{insight_id}", response=dict)
+def delete_insight(request, insight_id: int):
+    if not request.user.is_authenticated:
+        return {"error": "Authentication required"}
+        
+    try:
+        insight = StudentInsight.objects.get(id=insight_id, user=request.user)
+        insight.delete()
+        return {"status": "success", "message": "Insight deleted"}
+    except StudentInsight.DoesNotExist:
+        return {"error": "Insight not found"}
     except Exception as e:
         return {"error": str(e)}
 

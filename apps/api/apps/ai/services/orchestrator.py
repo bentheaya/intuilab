@@ -168,6 +168,52 @@ Always stay in character. Be encouraging, patient, and intellectually challengin
         # Return the chain stream
         return chain.astream({"history": history_objects, "input": last_input})
 
+    def evaluate_feynman_explanation(self, concept_title, concept_summary, explanation):
+        """Evaluates a student explanation using the Feynman Technique criteria."""
+        system_prompt = f"""
+You are the Feynman Technique Evaluation AI. Your task is to grade a student's explanation of a scientific concept.
+The Feynman Technique states that if you truly understand a concept, you can explain it in simple, jargon-free terms, using analogies, as if teaching a child.
+
+Concept: {concept_title}
+Core Principles: {concept_summary}
+
+Analyze the student's explanation on three criteria:
+1. Clarity (1-5): Is the explanation simple and free of circular definitions or excessive jargon?
+2. Depth (1-5): Does it capture the actual physical/mathematical core, or is it too shallow?
+3. Intuition (1-5): Does it show an intuitive grasp (e.g., using a physical analogy or first-principles explanation)?
+
+Generate a JSON object in this exact format:
+{{
+  "score": (overall score out of 100, where 70+ indicates mastery),
+  "clarity": (1-5),
+  "depth": (1-5),
+  "intuition": (1-5),
+  "feedback": "(constructive, encouraging critique in the spirit of Richard Feynman, pointing out what was explained well and what jargon or shallow thinking could be improved)"
+}}
+"""
+        # Run the LLM synchronously for API scoring
+        response = self.llm.invoke([
+            SystemMessage(content=system_prompt),
+            HumanMessage(content=f"Here is my explanation:\n{explanation}")
+        ])
+        
+        # Parse JSON from response
+        try:
+            content = response.content
+            # Strip markdown code blocks if present
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0]
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0]
+            return json.loads(content.strip())
+        except Exception as e:
+            return {
+                "score": 50,
+                "clarity": 3,
+                "depth": 3,
+                "intuition": 3,
+                "feedback": f"I couldn't parse the evaluation, but keep refining your explanation! Error: {str(e)}"
+            }
 
 # Alias to match GrokOrchestrator naming in roadmap/specifications
 GrokOrchestrator = SocraticOrchestrator

@@ -78,3 +78,33 @@ class SRSReview(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - Review for card {self.flashcard.id}"
+
+class StudentInsight(models.Model):
+    """
+    Saves student notes, derivations, analogical summaries, and voice-to-text transcriptions.
+    """
+    TYPE_CHOICES = [
+        ('derivation', 'Derivation'),
+        ('voice-note', 'Voice Note Transcription'),
+        ('lab-note', 'Virtual Lab Notebook'),
+    ]
+    SUBJECT_CHOICES = [
+        ('physics', 'Physics'),
+        ('chemistry', 'Chemistry'),
+        ('mathematics', 'Mathematics'),
+        ('biology', 'Biology'),
+    ]
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='insights')
+    title = models.CharField(max_length=200)
+    insight_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='derivation')
+    subject = models.CharField(max_length=20, choices=SUBJECT_CHOICES, default='physics')
+    summary = models.TextField()
+    tags = models.JSONField(default=list, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.title[:30]}"

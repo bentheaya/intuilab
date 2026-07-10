@@ -13,8 +13,20 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 
-export function SocraticSidebar({ lessonId }: { lessonId?: string }) {
-  const { messages, sendMessage, isTyping } = useSocraticChat(lessonId);
+import { Message } from '@/hooks/use-intuilab';
+
+interface SocraticSidebarProps {
+  lessonId?: string;
+  chatState?: {
+    messages: Message[];
+    sendMessage: (content: string) => void;
+    isTyping: boolean;
+  };
+}
+
+export function SocraticSidebar({ lessonId, chatState }: SocraticSidebarProps) {
+  const localChat = useSocraticChat(chatState ? undefined : lessonId);
+  const { messages, sendMessage, isTyping } = chatState || localChat;
   const [input, setInput] = useState('');
 
 
