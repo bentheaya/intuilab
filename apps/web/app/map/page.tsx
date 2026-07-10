@@ -11,7 +11,8 @@ import ReactFlow, {
   Connection,
   Edge,
   Handle,
-  Position
+  Position,
+  BackgroundVariant
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { Card, CardContent } from '@/components/ui/card';
@@ -69,20 +70,28 @@ const initialEdges = [
   { id: 'e5-6', source: '5', target: '6', style: { strokeDasharray: '5,5' } },
 ];
 
+const subjectColors: Record<string, { border: string, text: string, bar: string }> = {
+  physics: { border: "border-blue-500/30", text: "text-blue-400 border-blue-500/20", bar: "bg-blue-500" },
+  chemistry: { border: "border-red-500/30", text: "text-red-400 border-red-500/20", bar: "bg-red-500" },
+  mathematics: { border: "border-purple-500/30", text: "text-purple-400 border-purple-500/20", bar: "bg-purple-500" },
+  biology: { border: "border-emerald-500/30", text: "text-emerald-400 border-emerald-500/20", bar: "bg-emerald-500" },
+};
+
 const ConceptNode = ({ data }: { data: { label: string, subject: string, mastery: number } }) => {
   const isCompleted = data.mastery === 100;
+  const colors = subjectColors[data.subject.toLowerCase()] || subjectColors.physics;
   
   return (
     <div className={cn(
       "px-4 py-3 rounded-xl border bg-background/80 backdrop-blur-md shadow-2xl min-w-[180px] transition-all",
-      data.subject === 'physics' ? "border-blue-500/30" : "border-red-500/30"
+      colors.border
     )}>
       <Handle type="target" position={Position.Top} className="!bg-zinc-700 !border-none" />
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between">
           <Badge variant="outline" className={cn(
             "text-[8px] uppercase tracking-tighter px-1 lg:px-2",
-            data.subject === 'physics' ? "text-blue-400 border-blue-500/20" : "text-red-400 border-red-500/20"
+            colors.text
           )}>
             {data.subject}
           </Badge>
@@ -91,7 +100,7 @@ const ConceptNode = ({ data }: { data: { label: string, subject: string, mastery
         <div className="text-sm font-bold tracking-tight text-foreground truncate">{data.label}</div>
         <div className="w-full bg-secondary h-0.5 mt-1 rounded-full overflow-hidden">
           <div 
-            className={cn("h-full transition-all", data.subject === 'physics' ? "bg-blue-500" : "bg-red-500")} 
+            className={cn("h-full transition-all", colors.bar)} 
             style={{ width: `${data.mastery}%` }} 
           />
         </div>
@@ -244,7 +253,7 @@ export default function KnowledgeMap() {
           fitView
           className="bg-transparent"
         >
-          <Background color="#27272a" variant={Background.variant ?? 'dots'} />
+          <Background color="#27272a" variant={BackgroundVariant.Dots} />
           <Controls className="bg-zinc-900 border border-white/5 fill-white !shadow-2xl" />
         </ReactFlow>
       </div>

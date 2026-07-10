@@ -20,22 +20,22 @@ This file tracks the implementation progress of the IntuiLab platform modules, p
 
 ### Module 3: Content Pipeline & CMS
 - [x] Seed content for Physics: Mechanics (`physics_mechanics.json`) <!-- id: 5 -->
-- [ ] Build Django Admin CMS customized for content creators <!-- id: 6 -->
-- [ ] Seed additional Chemistry / Math concept content <!-- id: 7 -->
+- [x] Build Django Admin CMS customized for content creators <!-- id: 6 -->
+- [x] Seed additional Chemistry / Math concept content <!-- id: 7 -->
 
 ### Module 4: Interactive Frontend & Custom Hooks
-- [ ] Connect Lesson Player (`/learn/.../[lesson]`) Socratic Chat Sidebar to WebSocket <!-- id: 8 -->
-- [ ] Implement dynamically loaded LessonPlayer sections (text, video, interactive checkpoints) <!-- id: 9 -->
-- [ ] Connect Ethereal Knowledge Web (`/map`) dynamically to backend concepts & user mastery <!-- id: 10 -->
+- [x] Connect Lesson Player (`/learn/.../[lesson]`) Socratic Chat Sidebar to WebSocket <!-- id: 8 -->
+- [x] Implement dynamically loaded LessonPlayer sections (text, video, interactive checkpoints) <!-- id: 9 -->
+- [x] Connect Ethereal Knowledge Web (`/map`) dynamically to backend concepts & user mastery <!-- id: 10 -->
 
 ### Module 5: Adaptive Mastery Engine (BKT & SRS)
-- [ ] Connect client-side quiz submission to backend BKT MasteryService (`/api/v1/assessment/submit`) <!-- id: 11 -->
-- [ ] Integrate user mastery updates into `/map` visualization <!-- id: 12 -->
-- [ ] Connect Memory Deck (`/flashcards`) to backend `SRSService` for spaced repetition (SM-2) <!-- id: 13 -->
+- [x] Connect client-side quiz submission to backend BKT MasteryService (`/api/v1/assessment/submit`) <!-- id: 11 -->
+- [x] Integrate user mastery updates into `/map` visualization <!-- id: 12 -->
+- [x] Connect Memory Deck (`/flashcards`) to backend `SRSService` for spaced repetition (SM-2) <!-- id: 13 -->
 
 ### Module 6: Offline & PWA Scaffolding
-- [ ] Register Service Workers for offline shell loading <!-- id: 14 -->
-- [ ] Implement local caching of lessons, flashcards, and basic calculations <!-- id: 15 -->
+- [x] Register Service Workers for offline shell loading <!-- id: 14 -->
+- [x] Implement local caching of lessons, flashcards, and basic calculations <!-- id: 15 -->
 
 ---
 

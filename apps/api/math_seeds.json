@@ -1,0 +1,67 @@
+{
+  "subject": "mathematics",
+  "topics": [
+    {
+      "title": "Calculus & Limits",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "Introduction to Limits",
+          "summary": "Developing the rigorous foundation of calculus: analyzing what value a function approaches as the input gets infinitely close to a target.",
+          "history_text": "Augustin-Louis Cauchy formulated the epsilon-delta definition of limits in the 19th century to replace intuitive calculus reasoning.",
+          "lessons": [
+            {
+              "title": "The Limit Concept: Approaching a Value",
+              "difficulty": 2,
+              "sections": [
+                {
+                  "type": "text",
+                  "content": "The limit of $f(x)$ as $x$ approaches $c$ is $L$, written as:\n$$\\lim_{x \\to c} f(x) = L$$\nThis means we can make $f(x)$ as close to $L$ as we want by taking $x$ sufficiently close to $c$ (but not equal to $c$)."
+                },
+                {
+                  "type": "socratic_pause",
+                  "content": "Consider the function $f(x) = \\frac{x^2 - 1}{x - 1}$. At $x = 1$, the function is undefined ($0/0$). What happens to the value of $f(x)$ as $x$ gets extremely close to 1 (e.g. $1.0001$ or $0.9999$)? What is the limit?"
+                }
+              ]
+            },
+            {
+              "title": "Continuity and Discontinuity",
+              "difficulty": 3,
+              "sections": [
+                {
+                  "type": "text",
+                  "content": "A function $f(x)$ is **continuous** at $x = c$ if three conditions are met:\n1. $f(c)$ is defined.\n2. $\\lim_{x \\to c} f(x)$ exists.\n3. $\\lim_{x \\to c} f(x) = f(c)$."
+                },
+                {
+                  "type": "lab",
+                  "content": "Use a graphing tool to plot piecewise functions. Observe the 'breaks' or 'holes' visually and match them to mathematical discontinuities (removable, jump, infinite)."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Derivatives",
+          "summary": "Defining the instantaneous rate of change of a function as the limit of average slopes of secant lines.",
+          "history_text": "Newton and Leibniz independently developed calculus in the 17th century, using derivatives to solve problems in motion and tangents.",
+          "lessons": [
+            {
+              "title": "Derivatives from First Principles",
+              "difficulty": 3,
+              "sections": [
+                {
+                  "type": "text",
+                  "content": "The derivative $f'(x)$ is defined as the limit of the difference quotient:\n$$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$$\nThis represents the slope of the tangent line at any point $x$."
+                },
+                {
+                  "type": "socratic_pause",
+                  "content": "Using the definition above, derive the derivative of $f(x) = x^2$. Show that it equals $2x$ by expanding $(x+h)^2$ and taking the limit as $h \\to 0$."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

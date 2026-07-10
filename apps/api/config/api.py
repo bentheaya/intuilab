@@ -1,7 +1,8 @@
 from ninja import NinjaAPI, Router
 from apps.content.models import Lesson, Concept, Subject, Topic, AssessmentItem
-from apps.assessment.models import ConceptMastery, AssessmentAttempt
+from apps.assessment.models import ConceptMastery, AssessmentAttempt, Flashcard, SRSReview
 from apps.assessment.services import MasteryService, SRSService
+from django.utils import timezone
 from typing import List, Optional
 
 api = NinjaAPI(
@@ -57,6 +58,8 @@ def get_lesson(request, lesson_id: str):
             "id": lesson.id,
             "title": lesson.title,
             "concept_title": lesson.concept.title,
+            "concept_id": lesson.concept.id,
+            "concept_slug": lesson.concept.slug,
             "content": lesson.content_json,
             "difficulty": lesson.difficulty,
             "summary": lesson.concept.summary,
@@ -108,27 +111,33 @@ def get_map(request):
 
 api.add_router("/content", content_router)
 
+from pydantic import BaseModel
+
+class AssessmentSubmitSchema(BaseModel):
+    assessment_id: int
+    is_correct: bool
+
 assessment_router = Router()
 
 @assessment_router.post("/submit", response=dict)
-def submit_attempt(request, assessment_id: int, is_correct: bool):
+def submit_attempt(request, payload: AssessmentSubmitSchema):
     if not request.user.is_authenticated:
         return {"error": "Authentication required"}
     
     try:
-        item = AssessmentItem.objects.get(id=assessment_id)
+        item = AssessmentItem.objects.get(id=payload.assessment_id)
         # Record attempt
         AssessmentAttempt.objects.create(
             user=request.user,
             assessment_item=item,
-            is_correct=is_correct
+            is_correct=payload.is_correct
         )
         
         # Update BKT Mastery
         MasteryService.update_mastery(
             user=request.user,
             concept=item.concept,
-            is_correct=is_correct,
+            is_correct=payload.is_correct,
             p_slip=item.p_slip,
             p_guess=item.p_guess
         )
@@ -151,6 +160,98 @@ def get_user_mastery(request):
             "mastery_percent": int(p.p_known * 100)
         } for p in profiles
     ]
+
+def create_default_flashcards():
+    """Programmatically seeds default flashcards based on Concepts if none exist."""
+    concepts = Concept.objects.all().select_related('topic__subject')
+    for c in concepts:
+        Flashcard.objects.get_or_create(
+            concept=c,
+            defaults={
+                "front_text": f"What is the physical intuition and core concept of: {c.title}?",
+                "back_text": c.summary
+            }
+        )
+
+@assessment_router.get("/flashcards", response=List[dict])
+def get_flashcards(request):
+    # Ensure default flashcards are created if none exist
+    if not Flashcard.objects.exists():
+        create_default_flashcards()
+
+    if not request.user.is_authenticated:
+        # Fallback/guest list
+        flashcards = Flashcard.objects.all()[:15]
+        return [
+            {
+                "id": f.id,
+                "question": f.front_text,
+                "answer": f.back_text,
+                "subject": f.concept.topic.subject.name.lower(),
+                "difficulty": "medium",
+                "interval": 0,
+                "repetition_count": 0
+            } for f in flashcards
+        ]
+        
+    today = timezone.now().date()
+    # 1. Get cards that are due for review
+    reviews = SRSReview.objects.filter(user=request.user, next_review_date__lte=today)
+    
+    # 2. Get cards that have not been reviewed yet by this user
+    reviewed_ids = SRSReview.objects.filter(user=request.user).values_list('flashcard_id', flat=True)
+    unreviewed_cards = Flashcard.objects.exclude(id__in=reviewed_ids)
+    
+    cards_to_review = []
+    for r in reviews:
+        cards_to_review.append(r.flashcard)
+    for f in unreviewed_cards:
+        cards_to_review.append(f)
+        
+    # If no reviews are due and all cards are reviewed, fall back to random/all cards
+    if not cards_to_review:
+        cards_to_review = list(Flashcard.objects.all()[:15])
+        
+    result = []
+    for f in cards_to_review[:25]:
+        review = SRSReview.objects.filter(user=request.user, flashcard=f).first()
+        result.append({
+            "id": f.id,
+            "question": f.front_text,
+            "answer": f.back_text,
+            "subject": f.concept.topic.subject.name.lower(),
+            "difficulty": "medium",
+            "interval": review.interval if review else 0,
+            "repetition_count": review.repetition_count if review else 0
+        })
+    return result
+
+class FlashcardReviewSchema(BaseModel):
+    flashcard_id: int
+    quality: int
+
+@assessment_router.post("/flashcards/review", response=dict)
+def review_flashcard(request, payload: FlashcardReviewSchema):
+    if not request.user.is_authenticated:
+        return {"error": "Authentication required"}
+        
+    try:
+        flashcard = Flashcard.objects.get(id=payload.flashcard_id)
+        review = SRSService.record_review(
+            user=request.user,
+            flashcard=flashcard,
+            quality=payload.quality
+        )
+        return {
+            "status": "success",
+            "interval": review.interval,
+            "ease_factor": review.ease_factor,
+            "next_review_date": review.next_review_date.isoformat()
+        }
+    except Flashcard.DoesNotExist:
+        return {"error": "Flashcard not found"}
+    except Exception as e:
+        return {"error": str(e)}
 
 api.add_router("/assessment", assessment_router)
 

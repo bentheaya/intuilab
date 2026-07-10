@@ -5,18 +5,33 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useDiscovery } from '@/hooks/use-discovery';
 
 interface KnowledgeCheckProps {
   question: string;
   options: string[];
   correctAnswer: number;
+  conceptId?: string;
+  assessmentId?: number;
 }
 
-export function KnowledgeCheck({ question, options, correctAnswer }: KnowledgeCheckProps) {
+export function KnowledgeCheck({ question, options, correctAnswer, conceptId, assessmentId }: KnowledgeCheckProps) {
   const [selected, setSelected] = React.useState<string | null>(null);
   const [submitted, setSubmitted] = React.useState(false);
+  const { updateMastery, addXP } = useDiscovery();
 
   const isCorrect = selected === options[correctAnswer];
+
+  const handleVerify = () => {
+    setSubmitted(true);
+    const correct = selected === options[correctAnswer];
+    if (correct) {
+      addXP(15);
+    }
+    if (conceptId && assessmentId && updateMastery) {
+      updateMastery(conceptId, correct, assessmentId);
+    }
+  };
 
   return (
     <Card className="bg-zinc-900/50 border-white/5 overflow-hidden">
@@ -61,7 +76,7 @@ export function KnowledgeCheck({ question, options, correctAnswer }: KnowledgeCh
           <Button
             className="w-full mt-6 bg-blue-600 hover:bg-blue-500"
             disabled={!selected}
-            onClick={() => setSubmitted(true)}
+            onClick={handleVerify}
           >
             Verify Intuition
           </Button>

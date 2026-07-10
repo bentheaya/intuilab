@@ -8,7 +8,7 @@ interface DiscoveryContextType {
   activeSubject: Subject;
   setActiveSubject: (subject: Subject) => void;
   mastery: Record<string, number>; // conceptId -> mastery percentage
-  updateMastery: (conceptId: string, delta: number) => void;
+  updateMastery: (conceptId: string, isCorrect: boolean, assessmentId: number) => Promise<void>;
   streak: number;
   xp: number;
   addXP: (amount: number) => void;

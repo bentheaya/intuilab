@@ -1,0 +1,108 @@
+{
+  "subject": "chemistry",
+  "topics": [
+    {
+      "title": "Atomic Structure & Bonding",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "The Structure of the Atom",
+          "summary": "Reconstructing the history of atomic models, from Dalton's solid spheres to Rutherford's nuclear atom and Bohr's quantized orbits.",
+          "history_text": "J.J. Thomson discovered the electron in 1897 using cathode ray tube experiments, proving atoms are divisible.",
+          "lessons": [
+            {
+              "title": "Subatomic Particles and the Nucleus",
+              "difficulty": 1,
+              "sections": [
+                {
+                  "type": "text",
+                  "content": "An atom consists of a dense, positively charged nucleus containing **protons** and **neutrons**, surrounded by a cloud of negatively charged **electrons**.\n\nKey properties:\n* Proton: charge = +1, mass $\\approx 1\\text{ amu}$\n* Neutron: charge = 0, mass $\\approx 1\\text{ amu}$\n* Electron: charge = -1, mass $\\approx \\frac{1}{1836}\\text{ amu}$"
+                },
+                {
+                  "type": "socratic_pause",
+                  "content": "If the nucleus of an atom contains only positive protons and neutral neutrons, why doesn't electrostatic repulsion blow the nucleus apart? What other fundamental force must be at play here?"
+                }
+              ]
+            },
+            {
+              "title": "Isotopes and Molar Mass",
+              "difficulty": 2,
+              "sections": [
+                {
+                  "type": "text",
+                  "content": "**Isotopes** are atoms of the same element that have the same number of protons (atomic number $Z$) but different numbers of neutrons (mass number $A$).\n\nThe relative atomic mass ($A_r$) of an element is the weighted average of the isotopic masses:\n$$A_r = \\sum (\\text{abundance}_i \\times \\text{mass}_i)$$"
+                },
+                {
+                  "type": "lab",
+                  "content": "Simulate mass spectrometry data by weighing small plastic beads of different colors representing isotopes. Calculate the weighted average mass of your bead 'element'."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Chemical Bonding",
+          "summary": "Exploring how atoms share or transfer valence electrons to achieve stable octets, creating ionic, covalent, and metallic bonds.",
+          "history_text": "Gilbert N. Lewis proposed the octet rule in 1916, introducing electron dot structures to represent valence shells.",
+          "lessons": [
+            {
+              "title": "Ionic Bonding: Electron Transfer",
+              "difficulty": 2,
+              "sections": [
+                {
+                  "type": "text",
+                  "content": "**Ionic bonding** occurs when metal atoms transfer electrons to non-metal atoms, forming cations and anions held together by strong electrostatic attractions.\n\nExample: $\\text{Na} \\to \\text{Na}^+ + e^-$ and $\\text{Cl} + e^- \\to \\text{Cl}^-$. The resulting $\\text{NaCl}$ forms a giant ionic crystal lattice."
+                },
+                {
+                  "type": "socratic_pause",
+                  "content": "Why do ionic compounds conduct electricity when dissolved in water or melted, but are complete insulators in their solid crystal state?"
+                }
+              ]
+            },
+            {
+              "title": "Covalent Bonding: Electron Sharing",
+              "difficulty": 2,
+              "sections": [
+                {
+                  "type": "text",
+                  "content": "**Covalent bonding** involves the sharing of valence electron pairs between non-metal atoms to achieve stable noble gas configurations.\n\nShared pairs can form single ($H-H$), double ($O=O$), or triple ($N\\equiv N$) bonds, which vary in bond length and strength."
+                },
+                {
+                  "type": "lab",
+                  "content": "Use molecular model kits to construct 3D models of $\\text{H}_2\\text{O}$, $\\text{CO}_2$, and $\\text{CH}_4$. Draw Lewis structures for each showing shared pairs and lone pairs."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Stoichiometry & Mole Concept",
+      "level": "HS",
+      "concepts": [
+        {
+          "title": "The Mole and Avogadro's Constant",
+          "summary": "Bridging the microscopic scale of atoms with the macroscopic scale of laboratory measurements using the mole.",
+          "history_text": "Amedeo Avogadro proposed in 1811 that equal volumes of gases at the same temperature and pressure contain equal numbers of molecules.",
+          "lessons": [
+            {
+              "title": "Avogadro's Number and Molar Mass",
+              "difficulty": 2,
+              "sections": [
+                {
+                  "type": "text",
+                  "content": "One **mole** ($1\\text{ mol}$) contains exactly $6.022 \\times 10^{23}$ elementary particles (Avogadro's constant, $N_A$).\n\nThe relation between mass ($m$), molar mass ($M$), and moles ($n$) is:\n$$n = \\frac{m}{M}$$"
+                },
+                {
+                  "type": "socratic_pause",
+                  "content": "If you have $18\\text{ g}$ of water (exactly 1 mole of water molecules), how many hydrogen atoms do you have? Show your reasoning."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

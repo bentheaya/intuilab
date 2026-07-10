@@ -145,7 +145,52 @@ export default function LessonPlayer() {
                       <article key={idx} className="prose prose-zinc dark:prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-p:text-muted-foreground prose-p:leading-relaxed prose-strong:text-foreground">
                         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>{section.content}</ReactMarkdown>
                       </article>
-
+                    );
+                  case 'video':
+                    return (
+                      <div key={idx} className="aspect-video w-full rounded-2xl overflow-hidden border border-white/5 bg-black shadow-xl">
+                        {section.media_url ? (
+                          section.media_url.includes('youtube.com') || section.media_url.includes('youtu.be') ? (
+                            <iframe
+                              src={section.media_url.replace('watch?v=', 'embed/')}
+                              className="w-full h-full border-none"
+                              allowFullScreen
+                            />
+                          ) : (
+                            <video src={section.media_url} controls className="w-full h-full object-cover" />
+                          )
+                        ) : (
+                          <div className="flex items-center justify-center h-full text-zinc-500 font-mono text-xs">
+                            No Video Stream Provided
+                          </div>
+                        )}
+                      </div>
+                    );
+                  case 'diagram':
+                    return (
+                      <div key={idx} className="space-y-3">
+                        <div className="rounded-2xl overflow-hidden border border-white/5 bg-zinc-950/40 backdrop-blur-md p-2 flex justify-center group">
+                          <img 
+                            src={section.media_url || '/placeholder-diagram.png'} 
+                            alt={section.content} 
+                            className="rounded-xl max-h-[400px] object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                          />
+                        </div>
+                        {section.content && (
+                          <p className="text-xs text-center text-zinc-400 font-serif italic">{section.content}</p>
+                        )}
+                      </div>
+                    );
+                  case 'interactive':
+                    return (
+                      <KnowledgeCheck 
+                        key={idx}
+                        question={section.content}
+                        options={section.component_config?.options || ['Option A', 'Option B']}
+                        correctAnswer={Number(section.component_config?.correct_answer ?? 0)}
+                        conceptId={lessonData.concept_slug}
+                        assessmentId={section.component_config?.assessment_id}
+                      />
                     );
                   case 'socratic_pause':
                     return (

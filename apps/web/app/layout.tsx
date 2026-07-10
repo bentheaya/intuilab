@@ -7,6 +7,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppSidebar } from "@/components/features/AppSidebar";
 import { DiscoveryProvider } from "@/hooks/use-discovery";
+import { PWARegistration } from "@/components/features/PWARegistration";
 
 
 const inter = Inter({
@@ -22,6 +23,7 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "IntuiLab | Science & Mathematics Rediscovery",
   description: "A world-class Socratic platform for rediscovering scientific intuition.",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -34,6 +36,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${outfit.variable} font-sans min-h-screen bg-zinc-950 text-zinc-100`}>
         <div className="root h-full">
           <DiscoveryProvider>
+            <PWARegistration />
             <TooltipProvider>
               <SidebarProvider>
                 <div className="flex min-h-screen w-full">
